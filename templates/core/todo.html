@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	{% include 'partials/_alerts.html'%}
+	<div class="row pt-3">
+		<div class="col-md-6 mx-auto">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">
+					 {{todo.name|title}}
+					 {% if todo.expired %}
+					 	(Expired)
+					 {% endif %}
+					 {% if todo.completed %}
+					 	(Completed)
+					 {% endif %}
+					</li>
+				</ol>
+			</nav>
+		</div>	
+	</div>
+	<div class="row  text-center">
+		<div class="col-md-8 mx-auto">
+			{% if todo.expired %}
+				<h4 class="display-4">
+					<del>{{todo.name|title}}</del> <i class="fas fa-window-close text-danger"></i>
+				</h4>
+			{% elif todo.completed %}
+				<h4 class="display-4">
+					{{todo.name|title}} <i class="fas fa-check text-success"></i>
+				</h4>
+			{% else %}
+				<h4 class="display-4">
+					{{todo.name|title}} 
+				</h4>
+			{% endif %}
+			<p>
+				<i class="fas fa-clock">
+				</i> Created On: {{ todo.start_date |date:"F d, Y" }}
+			</p>	
+			
+			{% if todo.end_date %}
+			<p>
+				<i class="fas fa-user-clock">
+				</i> 
+				{% if todo.expired %}					
+					Expired: {{ todo.end_date |date:"F d, Y" }}
+				{% else %}
+					Expires: {{ todo.end_date |date:"F d, Y" }}
+				{% endif %}
+			</p>
+			{% endif %}
+
+			{% if todo.category %}
+			<p>
+				<a href="{% url 'cat' todo.category.pk todo.category %}" class="btn btn-block btn-outline-{{todo.category.color}}">{{todo.category|title}}</a>
+			</p>
+			{% endif %}
+		</div>
+	</div>
+	<hr>
+	<br>
+	<div class="row">
+		<div class="col-md-8 mx-auto">
+			<p class="text-center">{{todo.description|safe}}</p>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<div class="row">
+		<div class="col-md-6 pb-2">
+			{% if todo.expired %}
+				<a href="{% url 'todo-update' todo.id %}" class="btn btn-success btn-lg text-center center-align"><i class="fas fa-edit"></i> Reactivate</a>
+			{% else %}
+				<a href="{% url 'todo-update' todo.id %}" class="btn btn-success btn-lg text-center center-align"><i class="fas fa-edit"></i> Edit</a>
+			{% endif %}
+		</div>
+		<div class="col-md-6 pb-2">
+			<a href="{% url 'todo-delete' todo.id %}" class="btn btn-danger btn-lg text-center"><i class="fas fa-trash"></i> Delete</a>
+		</div>
+	</div>
+{% endblock %}

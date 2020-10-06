@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{user.username|title}}'s Profile
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+      
+      {% include 'partials/_alerts.html'%}
+        <div class="row mt-3">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-header text-white text-center bg-primary">
+                       <h4><i class="fas fa-globe-africa "></i>Profile Settings</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                          {% csrf_token %}
+                          <div class="form-row">
+                            <div class="form-group col-sm-6">
+                              {{form.first_name|as_crispy_field}}
+                            </div>
+                            <div class="form-group col-sm-6">
+                              {{form.last_name|as_crispy_field}}
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div class="form-group col-sm-6">
+                              {{form.email|as_crispy_field}}
+                            </div>
+                            <div class="form-group col-sm-6">
+                              {{form.username|as_crispy_field}}
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-sm btn-block bg-primary text-white">Update</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br><br>
+{% endblock %}

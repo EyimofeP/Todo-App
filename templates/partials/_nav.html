@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/"><i class="fas fa-book"></i> Mofe Todo</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li 
+      {% if '/' == request.path %}
+        class="nav-item active"
+      {% else %}
+        class="nav-item"
+      {% endif %}
+      >
+        <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li 
+      {% if 'category' in request.path %}
+        class="nav-item active"
+      {% else %}
+        class="nav-item"
+      {% endif %}>
+        <a class="nav-link" href="{% url 'category' %}"><i class="fas fa-book-open"></i> Category</a>
+      </li>
+      <li 
+      {% if 'profile' in request.path %}
+        class="nav-item active"
+      {% else %}
+        class="nav-item"
+      {% endif %}>
+        <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+      </li>
+        <li class="nav-item">
+           <a class="nav-link text-white" href="javascript:{document.getElementById('logout').submit()}"><i class="fas fa-sign-in-alt"> </i> Logout</a>
+            <form action="{% url 'logout' %}" id="logout" method="POST">
+              {% csrf_token %}
+              <input type="hidden">
+              </form>
+          </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search Todo or Details" aria-label="Search" name="keyword"
+      {% if keyword %}
+        value="{{keyword}}" 
+      {% endif %}
+      ">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
