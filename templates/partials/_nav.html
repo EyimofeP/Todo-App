@@ -15,29 +15,31 @@
       >
         <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
       </li>
-      <li 
-      {% if 'category' in request.path %}
-        class="nav-item active"
-      {% else %}
-        class="nav-item"
-      {% endif %}>
-        <a class="nav-link" href="{% url 'category' %}"><i class="fas fa-book-open"></i> Category</a>
-      </li>
-      <li 
-      {% if 'profile' in request.path %}
-        class="nav-item active"
-      {% else %}
-        class="nav-item"
-      {% endif %}>
-        <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
-      </li>
-        <li class="nav-item">
-           <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"><i class="fas fa-sign-in-alt"> </i> Logout</a>
-            <form action="{% url 'logout' %}" id="logout" method="POST">
-              {% csrf_token %}
-              <input type="hidden">
-              </form>
-          </li>
+      {% if user.is_authenticated %}
+        <li 
+        {% if 'category' in request.path %}
+          class="nav-item active"
+        {% else %}
+          class="nav-item"
+        {% endif %}>
+          <a class="nav-link" href="{% url 'category' %}"><i class="fas fa-book-open"></i> Category</a>
+        </li>
+        <li 
+        {% if 'profile' in request.path %}
+          class="nav-item active"
+        {% else %}
+          class="nav-item"
+        {% endif %}>
+          <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+        </li>
+          <li class="nav-item">
+             <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"><i class="fas fa-sign-in-alt"> </i> Logout</a>
+              <form action="{% url 'logout' %}" id="logout" method="POST">
+                {% csrf_token %}
+                <input type="hidden">
+                </form>
+            </li>
+      {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
       <input class="form-control mr-sm-2" type="search" placeholder="Search Todo or Details" aria-label="Search" name="keyword"
