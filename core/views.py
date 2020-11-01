@@ -92,7 +92,6 @@ def createTodo(request):
             return redirect('todo', user=request.user, pk=todo.pk)  # Redirect to Single Todo Page
     else:
         form = TodoForm(request.user)
-        messages.error(request, "An Error occured, Try Again Later!!")  # Spit Error Message
     frontend = {"form": form}
     return render(request, 'core/todo-create.html', frontend)
 
@@ -217,5 +216,5 @@ def userProfile(request):
         form = UserProfileForm(request.POST, instance=user)
         if form.is_valid:
             form.save()
-            messages.success(request, f"Your Profile was successfully updated, {user.first_name}")
+            messages.success(request, f"Your Profile was successfully updated, {user}")
     return render(request, "core/settings.html", frontend)
